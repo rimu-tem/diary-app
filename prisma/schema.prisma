@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId   Int       @id
+  username String    @unique @db.VarChar(255)
+  memories Memory[]
+  comments Comment[]
+
+  @@map(name: "users")
+}
+
+model Memory {
+  memoryId   String    @id @db.Uuid
+  memoryName String    @db.VarChar(255)
+  diary      String    @db.Text
+  createdAt  DateTime  @db.Timestamptz(6)
+  updatedAt  DateTime  @db.Timestamptz(6)
+  createdBy  Int
+  user       User      @relation(fields: [createdBy], references: [userId], onDelete: Cascade)
+  comments   Comment[]
+
+  @@index(fields: [createdBy])
+  @@map(name: "memories")
+}
+
+model Comment {
+  memoryId String @db.Uuid
+  userId   Int
+  comment  String @db.VarChar(255)
+  user     User   @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  memory   Memory @relation(fields: [memoryId], references: [memoryId], onDelete: Cascade)
+
+  @@id([memoryId, userId], name: "commentCompositeId")
+  @@map(name: "comments")
+}
