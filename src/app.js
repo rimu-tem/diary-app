@@ -15,7 +15,6 @@ const { getIronSession } = require("iron-session");
 const { PrismaClient } = require("@prisma/client");
 const layout = require("./layout");
 const { serve } = require('@hono/node-server');
-const app = require('./app');
 
 
 const prisma = new PrismaClient({ log: ["query"] });
@@ -26,14 +25,14 @@ const logoutRouter = require("./routes/logout");
 const memoriesRouter = require("./routes/schedules");
 const commentsRouter = require("./routes/comments");
 
+const app = new Hono();
+
 const port = Number(process.env.PORT) || 3000;
-console.log(`Server running at http://localhost:${port}/`);
+console.log(`Server is running on port ${port}`);
 serve({
   fetch: app.fetch,
   port,
 });
-
-const app = new Hono();
 
 app.use(async (c, next) => {
   const { CSRF_TRUSTED_ORIGIN } = env(c);
