@@ -14,6 +14,9 @@ const { githubAuth } = require("@hono/oauth-providers/github");
 const { getIronSession } = require("iron-session");
 const { PrismaClient } = require("@prisma/client");
 const layout = require("./layout");
+const { serve } = require('@hono/node-server');
+const app = require('./app');
+
 
 const prisma = new PrismaClient({ log: ["query"] });
 
@@ -22,6 +25,13 @@ const loginRouter = require("./routes/login");
 const logoutRouter = require("./routes/logout");
 const memoriesRouter = require("./routes/schedules");
 const commentsRouter = require("./routes/comments");
+
+const port = Number(process.env.PORT) || 3000;
+console.log(`Server running at http://localhost:${port}/`);
+serve({
+  fetch: app.fetch,
+  port,
+});
 
 const app = new Hono();
 
