@@ -3,7 +3,7 @@ services:
     build: .
     tty: true
     ports:
-      - 8888:8888
+      - 3000:3000
     volumes:
       - .:/app
       - node_modules:/app/node_modules
