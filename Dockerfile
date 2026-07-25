@@ -1,4 +1,4 @@
-FROM node:22.15.0-slim
+FROM milesmcc/shynet:latest
 
 RUN apt-get update && apt-get install -y \
   git \
