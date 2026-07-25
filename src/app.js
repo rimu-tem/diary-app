@@ -14,7 +14,6 @@ const { githubAuth } = require("@hono/oauth-providers/github");
 const { getIronSession } = require("iron-session");
 const { PrismaClient } = require("@prisma/client");
 const layout = require("./layout");
-const { serve } = require('@hono/node-server');
 
 
 const prisma = new PrismaClient({ log: ["query"] });
