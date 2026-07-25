@@ -27,13 +27,6 @@ const commentsRouter = require("./routes/comments");
 
 const app = new Hono();
 
-const port = Number(process.env.PORT) || 3000;
-console.log(`Server is running on port ${port}`);
-serve({
-  fetch: app.fetch,
-  port,
-});
-
 app.use(async (c, next) => {
   const { CSRF_TRUSTED_ORIGIN } = env(c);
   const handler = csrf({
