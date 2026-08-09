@@ -9,6 +9,3 @@ npx prisma generate
 
 # app/entry.js のビルド
 npx webpack
-
-# アプリケーションを起動
-node src/server.js
