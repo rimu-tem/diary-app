@@ -18,9 +18,9 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: schedule_arranger
     volumes:
-      - diary-app-data:/var/lib/postgresql/data
+      - schedule-arranger-data:/var/lib/postgresql/data
 
 volumes:
   node_modules:
-  diary-app-data:
+  schedule-arranger-data:
     external: true
